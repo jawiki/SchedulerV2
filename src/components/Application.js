@@ -1,45 +1,66 @@
-
-import React, { useState } from "react";
-import "DayList.js";
+import React, { useState, useEffect } from "react";
+// import axios from "axios";
+import Appointment from "components/Appointment";
+import DayList from "./DayList";
+import "components/Appointment";
 import "components/Application.scss";
+import useApplicationData from "hooks/useApplicationData";
+// import { getAppointmentsForDay, getInterview, getInterviewerForDay } from "helpers/selectors";
 
-const days = props.days.map((day) => {
-  return (
-    <DayListItem
-      key={day.id}
-      name={day.name}
-      spots={day.spots}
-      selected={day.name === props.value}
-      setDay={props.onChange}
-    />
-  );
-});
-
-const [day, setDay] = useState("Monday");
 
 export default function Application(props) {
+  const {
+    state,
+    setDay,
+    bookInterview,
+    cancelInterview
+  } = useApplicationData();
+  
+  // const dailyAppointments = getAppointmentsForDay(state, state.day);
+  // const dailyInterviewers = getInterviewerForDay(state, state.day);
+
+  const schedule = dailyAppointments.map((appointment) => {
+    // const interview = getInterview(state, appointment.interview);
+
+    return (
+      <Appointment
+        key={appointment.id}
+        id={appointment.id}
+        time={appointment.time}
+        interview={interview}
+        interviewers={dailyInterviewers}
+        bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
+      />
+    );
+  });
+
+
   return (
     <main className="layout">
       <section className="sidebar">
-        {/* Replace this with the sidebar elements during the "Project Setup & Familiarity" activity. */}
-      </section>
+        <img
+          className="sidebar--centered"
+          src="images/logo.png"
+          alt="Interview Scheduler"
+        />
+        <hr className="sidebar__separator sidebar--centered" />
+        <nav className="sidebar__menu">
+          <DayList
+            days={state.days}
+            value={state.day}
+            onChange={setDay}
+          />
+        </nav>
+        <img
+          className="sidebar__lhl sidebar--centered"
+          src="images/lhl.png"
+          alt="Lighthouse Labs"
+        />      </section>
       <section className="schedule">
-        {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
+        {schedule}
+        <Appointment time="5pm" />
       </section>
-      <img
-        className="sidebar--centered"
-        src="images/logo.png"
-        alt="Interview Scheduler"
-      />
-      <hr className="sidebar__separator sidebar--centered" />
-      <nav className="sidebar__menu">
-        <DayList days={days} day={day} setDay={setDay} />
-      </nav>
-      <img
-        className="sidebar__lhl sidebar--centered"
-        src="images/lhl.png"
-        alt="Lighthouse Labs"
-      />
     </main>
   );
-}
+  }
