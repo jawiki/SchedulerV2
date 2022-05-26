@@ -5,22 +5,21 @@ import DayList from "./DayList";
 import "components/Appointment";
 import "components/Application.scss";
 import useApplicationData from "hooks/useApplicationData";
-// import { getAppointmentsForDay, getInterview, getInterviewerForDay } from "helpers/selectors";
-
+import {
+  getAppointmentsForDay,
+  getInterview,
+  getInterviewerForDay,
+} from "helpers/selectors";
 
 export default function Application(props) {
-  const {
-    state,
-    setDay,
-    bookInterview,
-    cancelInterview
-  } = useApplicationData();
-  
-  // const dailyAppointments = getAppointmentsForDay(state, state.day);
-  // const dailyInterviewers = getInterviewerForDay(state, state.day);
+  const { state, setDay, bookInterview, cancelInterview } =
+    useApplicationData();
+
+  const dailyAppointments = getAppointmentsForDay(state, state.day);
+  const dailyInterviewers = getInterviewerForDay(state, state.day);
 
   const schedule = dailyAppointments.map((appointment) => {
-    // const interview = getInterview(state, appointment.interview);
+    const interview = getInterview(state, appointment.interview);
 
     return (
       <Appointment
@@ -35,7 +34,6 @@ export default function Application(props) {
     );
   });
 
-
   return (
     <main className="layout">
       <section className="sidebar">
@@ -46,21 +44,18 @@ export default function Application(props) {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-          <DayList
-            days={state.days}
-            value={state.day}
-            onChange={setDay}
-          />
+          <DayList days={state.days} value={state.day} onChange={setDay} />
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"
           src="images/lhl.png"
           alt="Lighthouse Labs"
-        />      </section>
+        />{" "}
+      </section>
       <section className="schedule">
         {schedule}
         <Appointment time="5pm" />
       </section>
     </main>
   );
-  }
+}

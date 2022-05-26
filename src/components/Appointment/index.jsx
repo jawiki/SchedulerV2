@@ -1,12 +1,12 @@
 import React, { Fragment } from "react";
 import "./styles.scss";
-import Confirm from "./Confirm";
-import Empty from "./Empty";
-import Error from "./Error";
-import Form from "./Form";
-import Header from "./Header";
-import Show from "./Show";
-import Status from "./Status";
+import Confirm from "./confirm";
+import Empty from "./empty";
+import Error from "./error";
+import Form from "./form";
+import Header from "./header";
+import Show from "./show";
+import Status from "./status";
 import useVisualMode from "hooks/useVisualMode";
 
 const EMPTY = "EMPTY";
@@ -39,20 +39,20 @@ export default function Appointment(props) {
       .catch(err => transition(ERROR_SAVE, true));
   };
 
+    const editApp = () => {
+    transition(EDIT);
+  };
+
   const deleteApp = () => {
     transition(DELETE, true);
     props.cancelInterview(props.id)
       .then(() => transition(EMPTY))
       .catch(err => transition(ERROR_DELETE, true));
   };
-
   const deleteConfirm = () => {
     transition(CONFIRM);
   };
 
-  const editApp = () => {
-    transition(EDIT);
-  };
 
   return (
     <article className="appointment">
