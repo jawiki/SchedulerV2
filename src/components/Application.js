@@ -5,16 +5,15 @@ import DayList from "./DayList";
 import "components/Appointment";
 import "components/Application.scss";
 import useApplicationData from "hooks/useApplicationData";
-import {
-  getAppointmentsForDay,
-  getInterview,
-  getInterviewerForDay,
-} from "helpers/selectors";
+
+import {getAppointmentsForDay} from "helpers/selectors";
+import  {getInterview} from "helpers/selectors";
+import {getInterviewerForDay} from "helpers/selectors";
 
 export default function Application(props) {
   const { state, setDay, bookInterview, cancelInterview } =
     useApplicationData();
-
+  // console.log("jarrett", TEST);
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const dailyInterviewers = getInterviewerForDay(state, state.day);
 
