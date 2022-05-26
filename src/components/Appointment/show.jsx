@@ -1,6 +1,7 @@
 
 import React from "react";
 
+export default function Show() {
 <main className="appointment__card appointment__card--show">
   <section className="appointment__card-left">
     <h2 className="text--regular">Lydia Miller-Jones</h2>
@@ -24,3 +25,4 @@ import React from "react";
     </section>
   </section>
 </main>;
+}
